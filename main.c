@@ -1,13 +1,44 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
+#endif
 #include <sys/wait.h>
+#ifdef HAVE_INTTYPES_H
+#include <inttypes.h>
+#endif
+#ifdef HAVE_STDINT_H
+#include <stdint.h>
+#endif
 
 #include <stdio.h>
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
+#endif
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+#ifdef HAVE_STRINGS_H
 #include <strings.h>
+#endif
+#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
+
+#ifdef HAVE_VFORK_H
+#include <vfork.h>
+#endif
 
 #include <getopt.h>
 
@@ -77,7 +108,7 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
-	forkres = fork();
+	forkres = vfork();
 	if (forkres == -1)
 	{
 		perror("fork");
@@ -151,7 +182,7 @@ int main(int argc, char **argv)
 			exit(EXIT_FAILURE);
 		}
 
-		kid = fork();
+		kid = vfork();
 		if (kid == -1)
 		{
 			perror("fork");
