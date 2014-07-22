@@ -40,6 +40,10 @@
 #include <vfork.h>
 #endif
 
+#ifdef HAVE_PWD_H
+#include <pwd.h>
+#endif
+
 #include <getopt.h>
 
 #define LOGGER_PATH "/usr/bin/logger"
@@ -49,11 +53,13 @@ int optind;
 int main(int argc, char **argv)
 {
 	char *logfile = "/dev/null", *pidfile = NULL;
+	struct passwd *pw = NULL;
+	uid_t uid = 0;
 	char *bname, *strpid;
 	int optc, fd, nullfd, to_logger = 0;
 	pid_t forkres, mypid;
 
-	while ((optc = getopt(argc, argv, "l:p:")) != -1)
+	while ((optc = getopt(argc, argv, "l:p:u:")) != -1)
 	{
 		switch (optc)
 		{
@@ -71,6 +77,15 @@ int main(int argc, char **argv)
 			break;
 		case 'p':
 			pidfile = optarg;
+			break;
+		case 'u':
+			pw = getpwnam(optarg);
+			if (!pw)
+			{
+				perror(optarg);
+				exit(EXIT_FAILURE);
+			}
+			uid = pw->pw_uid;
 			break;
 		default:
 			fprintf(stderr, "Unknown option %c\n", optc);
@@ -217,6 +232,12 @@ int main(int argc, char **argv)
 	else
 	{
 		fd = open(logfile, O_CREAT|O_WRONLY|O_APPEND, 0600);
+	}
+
+	if (uid > 0 && setuid(uid))
+	{
+		perror("setuid");
+		exit(EXIT_FAILURE);
 	}
 
 	close(STDOUT_FILENO);

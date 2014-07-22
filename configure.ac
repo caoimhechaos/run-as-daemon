@@ -14,10 +14,11 @@ AC_CHECK_PROG([logger])
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([fcntl.h inttypes.h memory.h stdint.h stdlib.h string.h strings.h unistd.h])
+AC_CHECK_HEADERS([fcntl.h inttypes.h memory.h stdint.h stdlib.h string.h strings.h unistd.h pwd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_PID_T
+AC_TYPE_UID_T
 
 # Checks for library functions.
 AC_FUNC_FORK
