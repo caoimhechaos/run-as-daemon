@@ -1,0 +1,100 @@
+.\" Hey, EMACS: -*- nroff -*-
+.TH RUN-AS-DAEMON "1" "Jul 2014" "run-as-daemon"
+.SH NAME
+run\-as\-daemon \- detach a given program from foreground and write its output
+to a log
+.SH SYNOPSIS
+.TP
+.B run\-as\-daemon
+\fI[\-l logfile|=logger]\fR
+\fI[\-p pidfile]\fR
+\fI[\-u user]\fR
+\fI[\-\-]\fR
+\fI/path/to/program\fR
+\fI[\-\-flags]\fR
+.SH DESCRIPTION
+.PP
+.B run\-as\-daemon
+runs a given program as a daemon by detaching it from the controlling
+terminal, forking into background and potentially writing its output to
+a log file.
+.SH OPTIONS
+.TP
+\fB\-l logfile\fR
+.TP
+\fB\-l =logger\fR
+Write all output the program sends to its stderr to the specified log file.
+Takes any path.
+The special path
+.I =logger
+instructs
+.B run\-as\-daemon
+to write its output to a pipe to
+.I /usr/bin/logger
+instead, thus sending it to syslog.
+By default, all output is sent to /dev/null.
+.TP
+\fB\-p pidfile\fR
+Write the ID of the newly spawned process to the given file.
+This is useful for e.g. init scripts, which want to find and kill the
+process later.
+.TP
+\fB\-u user\fR
+Specify an user (by name) which the program should be run as.
+The privileges of the user will be dropped to this one after the logger
+has been launched, but before starting the acutal process.
+.TP
+\fB\-\-\fR
+Optional separator between parameters to
+.B run\-as\-daemon
+and the program to be run.
+.TP
+\fB/path/to/program\fR
+Full path of the binary to be run. This will not be interpreted by a
+shell, so it must be a full path.
+.TP
+\fB\-\-flags\fR 
+Parameters to pass to the program to be run as a daemon, if any.
+.SH EXAMPLES
+To run a program named foo, which doesn't detach from its terminal, as a
+daemon as user nobody and log to syslog, run the following command:
+.PP
+.nf
+.RS
+run\-as\-daemon \-l =logger \-u nobody \-p /run/foo.pid \-\- /usr/bin/foo \
+\-b ar \-b az /tmp/quux.sock
+.RE
+.fi
+.SH AUTHOR
+.B run\-as\-daemon
+was written by Caoimhe Chaos.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2011-2013 Caoimhe Chaos
+.PP
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+.PP
+.IP \[bu] 2
+Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+.IP \[bu] 2
+Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or
+other materials provided with the distribution.
+.IP \[bu] 2
+Neither the name of Ancient Solutions nor the name of its contributors may be
+used to endorse or promote products derived from this software without specific
+prior written permission.
+.PP
+THIS SOFTWARE IS PROVIDED BY ANCIENT SOLUTIONS AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
