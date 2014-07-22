@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([run-as-daemon], [1.0], [caoimhechaos@protonmail.com])
+AC_INIT([run-as-daemon], [1.1], [caoimhechaos@protonmail.com])
 AC_CONFIG_SRCDIR([main.c])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
