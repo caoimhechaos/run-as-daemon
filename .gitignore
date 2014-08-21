@@ -1,4 +1,4 @@
-*.o
+# autotools
 .deps
 Makefile
 Makefile.in
@@ -12,3 +12,27 @@ install-sh
 missing
 run-as-daemon
 stamp-h1
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
