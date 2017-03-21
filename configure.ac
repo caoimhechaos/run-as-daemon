@@ -24,5 +24,6 @@ AC_TYPE_UID_T
 AC_FUNC_FORK
 AC_CHECK_FUNCS([dup2])
 
+AC_DEFINE([_GNU_SOURCE], [], [Use GNU extensions of libc, e.g. asprintf])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
