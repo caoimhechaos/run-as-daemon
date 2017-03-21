@@ -183,7 +183,10 @@ int main(int argc, char **argv)
 		perror(pidfile);
 		exit(EXIT_FAILURE);
 	}
-	write(fd, strpid, strlen(strpid));
+	if (write(fd, strpid, strlen(strpid)) < 0) {
+		perror(pidfile);
+		exit(EXIT_FAILURE);
+	}
 	close(fd);
 
 	if (to_logger)
